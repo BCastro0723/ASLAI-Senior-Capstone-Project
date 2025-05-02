@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Video Streaming{% endblock %}
+
+{% block content %}
+<h1>ASL Detection</h1>
+<div style="display: flex;">
+    <div style="flex: 1;">
+        <img src="{{ url_for('video_stream') }}" alt="Live Video Feed">
+    </div>
+    <div style="flex: 1; padding-left: 20px;">
+        <h2>Sign Gestures</h2>
+        <textarea id="sign_gestures" style="width: 100%; height: 400px;"></textarea>
+        <button onclick="translate_word()">Translate</button> <!-- Add a Translate button -->
+        <button onclick="clear_word()">Clear</button> <!-- Use clear_word() for clearing the textarea -->
+        <button onclick="speakText()">Speak</button> <!-- Add a Speak button -->
+    </div>
+</div>
+<script>
+    setInterval(function () {
+        fetch('/latest_word')
+            .then(response => response.text())
+            .then(word => {
+                document.getElementById('sign_gestures').value = word;
+            });
+    }, 1000);  // Check every second
+
+    function clear_word() {
+        fetch('/clear_word')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(clearedText => {
+                // Update the content of the text area with the cleared text
+                document.getElementById('sign_gestures').value = clearedText;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function translate_word() {
+        fetch('/translate_word')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // Parse response as JSON
+            })
+            .then(data => {
+                document.getElementById('sign_gestures').value = data.translation;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function speakText() {
+        // Get the text to speak from the textarea
+        var text = document.getElementById('sign_gestures').value;
+
+        // Send an AJAX request to the Flask route
+        fetch('/speak_text', {
+            method: 'POST',
+            body: new URLSearchParams({ text: text }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                console.log('Text spoken successfully');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+{% endblock %}

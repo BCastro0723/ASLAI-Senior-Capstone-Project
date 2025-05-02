@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}ASLAI Gesture Recognition{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center mt-5">
+            <h1 class="display-4 font-weight-bold">Welcome To ASLAI Gesture Recognition</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="recognition" class="jumbotron jumbotron-fluid text-center mt-5">
+                <a href="http://127.0.0.1:5000/recognize">
+                    <img src="{{ url_for('static', filename='images/SignHand.png') }}" class="img-fluid mb-4"
+                        alt="Recognition" style="max-width: 200px;">
+                </a>
+                <h1 class="display-4">Recognition</h1>
+                <p class="lead">Start recognizing ASL gestures.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="translation" class="jumbotron jumbotron-fluid text-center mt-5">
+                <img src="{{ url_for('static', filename='images/translate.jpg') }}" class="img-fluid mb-4"
+                    alt="Translation" style="max-width: 200px;">
+                <h1 class="display-4">Translation</h1>
+                <p class="lead">Translate ASL gestures into text.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="speech" class="jumbotron jumbotron-fluid text-center mt-5">
+                <img src="{{ url_for('static', filename='images/tts.jpg') }}" class="img-fluid mb-4" alt="Speech"
+                    style="max-width: 200px;">
+                <h1 class="display-4">Speech</h1>
+                <p class="lead">Convert text into speech for easy communication.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div id="about" class="jumbotron jumbotron-fluid text-center mt-5">
+                <img src="{{ url_for('static', filename='images/aboutus.png') }}" class="img-fluid mb-4" alt="About"
+                    style="max-width: 200px;">
+                <h1 class="display-4">About Us</h1>
+                <p class="lead">We are three senior students that created ASLAI at West Texas A&M. We want to thank our
+                    Professors for the support. </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
